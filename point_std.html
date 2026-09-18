@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="lo">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <title>ເພີ່ມຄະແນນນັກຮຽນ - Firebase</title>
+        <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Phetsarath OT', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background: #ffffff;
+            max-width: 600px;
+            width: 100%;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .btn-login-page {
+             text-decoration: none;
+              color: #6c757d;
+               font-size: 14px; 
+               font-weight: bold; 
+        }h2 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"], select, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+        .divider {
+            border: 0;
+            height: 1px;
+            background: #e0e0e0;
+            margin: 20px 0;
+        }
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .subject-card {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+       .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #95a5a6;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+             <div class="top-bar">
+        <a href="index.html" class="btn-login-page">📝 ກວດສອບຄະແນນນັກຮຽນ</a>
+    </div>
+            <h2>📝 ເພີ່ມ / ອັບເດດ ຄະແນນນັກຮຽນ</h2>
+            <div class="form-group">
+                <label>ລະຫັດນັກຮຽນ:</label>
+                <select id="addStdCode">
+                    <option value="">ກະລຸນາເລືອກລະຫັດນັກຮຽນ</option>
+                    <option value="M201">M201</option>
+                    <option value="M202">M202</option>
+                    <option value="M203">M203</option>
+                    <option value="M204">M204</option>
+                    <option value="M205">M205</option>
+                    <option value="M206">M206</option>
+                    <option value="M207">M207</option>
+                    <option value="M208">M208</option>
+                    <option value="M209">M209</option>
+                    <option value="M210">M210</option>
+                    <option value="M211">M211</option>
+                    <option value="M212">M212</option>
+                    <option value="M213">M213</option>
+                    <option value="M214">M214</option>
+                    <option value="M215">M215</option>
+                    <option value="M216">M216</option>
+                    <option value="M217">M217</option>
+                    <option value="M218">M218</option>
+                    <option value="M219">M219</option>
+                    <option value="M220">M220</option>
+                    <option value="M221">M221</option>
+                    <option value="M222">M222</option>
+                    <option value="M223">M223</option>
+                    <option value="M224">M224</option>
+                    <option value="M225">M225</option>
+                    <option value="M226">M226</option>
+                    <option value="M227">M227</option>
+                    <option value="M228">M228</option>
+                    <option value="M229">M229</option>
+                    <option value="M230">M230</option>
+                    <option value="M231">M231</option>
+                    <option value="M232">M232</option>
+                    <option value="M233">M233</option>
+                    <option value="M234">M234</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>ຊື່ ແລະ ນາມສະກຸນ:</label>
+                <select id="addStdName">
+                    <option value="">-- ຊື່ ແລະ ນາມສະກຸນ --</option>
+                    <option value="M201">ນາງ ພຸດສະດີ ລິດຊະນະ (ຈຸລີ)</option>
+                    <option value="M202">ນາງ ສຸຈິນດາ ພິມຈັນດີ (ຈິນດາ)</option>
+                    <option value="M203">ນາງ ຟ້າສຸດາ ພົມມະຈັນ (ສີຟ້າ)</option>
+                    <option value="M204">ທ້າວ ເພັດອາທອນ (ຄາເວຍ)</option>
+                    <option value="M205">ທ້າວ ເທບສະຫວັນ ວໍລະວຸດ (ເທບ)</option>
+                    <option value="M206">ທ້າວ ມັງກອນ ພູມນະວົງໄຊ (ມັງກອນ)</option>
+                    <option value="M207">ນາງ ວະລຳພອນ ພອນມະນີວົງ (ເຟີລາລີ)</option>
+                    <option value="M208">ທ້າວ ຈັນທະວີສຸກ ດາວົງ (ແບ້ງ)</option>
+                    <option value="M209">ທ້າວ ຈັນທະລັກ ຮ່ວງ (ປໍເຊ້)</option>
+                    <option value="M210">ທ້າວ ທັນວາ ວົງດາລາ (ປາເອິນ)</option>
+                    <option value="M211">ທ້າວ ວິລະສິດ ມະນີວົງ (ເຈມ)</option>
+                    <option value="M212">ນາງ ສຸດທິດາ ພັກຄົມ (ເຈນນີ້)</option>
+                    <option value="M213">ທ້າວ ທະວີໄຊ ສີອຳພອນ (ອັນດາ)</option>
+                    <option value="M214">ທ້າວ ແສງວິໄລ ເພັງສິນປະເສີດ (ອ໋ອບ)</option>
+                    <option value="M215">ທ້າວ ພອນທະວີໄຊ (ສັກດາ)</option>
+                    <option value="M216">ທ້າວ ອາດຊະວິນ ສີລາວັນ (ບ໋ອມ)</option>
+                    <option value="M217">ທ້າວ ແມນໂນທິວ ບຸນຈະເລີນ (ທຸງທິວ)</option>
+                    <option value="M218">ທ້າວ ອາລັນໄຊ ຫຼວງລາດ (ອາລັນ)</option>
+                    <option value="M219">ທ້າວ ນັດຖະພົນ ສີດາ (ຕົ້ນຝົນ)</option>
+                    <option value="M220">ນາງ ປາລິນດາ ຫົງຄຳ (ລິນດາ)</option>
+                    <option value="M221">ທ້າວ ສິດທິໄຊ ຄູນຈະເລີນ (ບອຍ)</option>
+                    <option value="M222">ທ້າວ ສຸພາກອນ ສີສະຫວັດ (ມີໂດ)</option>
+                    <option value="M223">ທ້າວ ແສງອາທິດ ໄຊຍະແສງ (ພາຍຸດ)</option>
+                    <option value="M224">ທ້າວ ໂຢທິນ ມະຫາອາມາດ (ໂຢ)</option>
+                    <option value="M225">ທ້າວ ມີໄຊ ແສງເພັດນະວົງ (ມີໄຊ)</option>
+                    <option value="M226">ທ້າວ ພູສະຫວັນ ທຳມະວົງ (ກ໋ອບ)</option>
+                    <option value="M227">ທ້າວ ສິດທັດສອນ  (ເບັ້ນ)</option>
+                    <option value="M228">ທ້າວ ວົງພະຈັນ ທຳມະວົງ (ອາເລັກ)</option>
+                    <option value="M229">ທ້າວ ພອນສະຫວັນ ກຸນປັນຍາ (ວັນນະ)</option>
+                    <option value="M230">ນາງ ພິມມະສອນ (ເອັມໆ)</option>
+                    <option value="M231">ທ້າວ ວັນນະຄອນ ວົງນີສຸກ (ອາຕົງ)</option>
+                    <option value="M232">ທ້າວ ເດດ ວັນນະສີ (ເດດ)</option>
+                    <option value="M233">ນາງ ປູນາ ວັນນະສີ (ປູນາ)</option>
+                    <option value="M234">ນາງ ຟ້າໃສ ນັນທະວົງ (ເນີຍ)</option>
+                </select>
+                <!-- <input type="text" id="addStdName" placeholder="ເຊັ່ນ: ທ້າວ ສົມຊາຍ" required> -->
+            </div>
+            <!-- ช่องชื่อเล่นที่ต้องเพิ่ม -->
+            <!-- <div class="form-group">
+    <label>ຊື່ຫຼິ້ນ:</label>
+    <input type="text" id="addStdNickname" placeholder="ເຊັ່ນ: ນ້ອຍ">
+</div> -->
+            <div class="form-group">
+                <label>ເລືອກເດືອນ:</label>
+                <select id="addMonthSelect">
+                    <option value="">-- ເລືອກເດືອນ --</option>
+                    <option value="9">ເດືອນ 9 (ກັນຍາ)</option>
+                    <option value="10">ເດືອນ 10 (ຕຸລາ)</option>
+                    <option value="11">ເດືອນ 11 (ພະຈິກ)</option>
+                    <option value="12">ເດືອນ 12 (ທັນວາ)</option>
+                    <option value="1">ພາກຮຽນທີ I (ມັງກອນ)</option>
+                    <option value="2">ເດືອນ 2 (ກຸມພາ)</option>
+                    <option value="3">ເດືອນ 3 (ມີນາ)</option>
+                    <option value="4">ເດືອນ 4 (ເມສາ)</option>
+                    <option value="5">ພາກຮຽນທີ II (ພຶດສະພາ)</option>
+                    <option value="6">ເດືອນ 5 (ມິຖຸນາ)</option>
+                </select>
+            </div>
+            <hr class="divider">
+            <label style="font-size: 16px; color: #1a73e8;">📚 ປ້ອນຄະແນນແຕ່ລະວິຊາ:</label>
+            <!-- บล็อกสร้างช่องกรอกทั้ง 13 วิชาอัตโนมัติ -->
+            <div id="subjectInputsContainer" class="subject-grid"></div>
+            <button type="button" class="btn-submit" onclick="saveStudentData(event)">💾 ບັນທຶກຂໍ້ມູນ</button>
+             <div class="login-footer">
+            <p>&copy; ລະບົບຈັດການຄະແນນນັກຮຽນ 2026</p>
+        </div>
+        </div>
+        <!-- <div class="login-footer">
+            <p>&copy; ລະບົບຈັດການຄະແນນນັກຮຽນ 2026</p>
+        </div> -->
+    <script>     
+    const FIREBASE_URL = "https://classscorem3-default-rtdb.firebaseio.com/";
+
+    const SUBJECT_LIST = [
+        "ພາສາລາວ", "ວັນນະຄະດີ", "ຄະນິດສາດ", "ສຶກສາພົນລະເມືອງ",
+        "ວິທະຍາສາດທຳມະຊາດ", "ພູມສາດ", "ປະຫວັດສາດ", "ເຕັກໂນໂລຊີ (ຄອມ)",
+        "ພື້ນຖານວິຊາຊີບ", "ສິລະປະກຳ", "ສິລະປະດົນຕີ", "ພາສາອັງກິດ", "ພະລະສຶກສາ"
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        renderSubjectInputs();
+    });
+
+    function renderSubjectInputs() {
+        const container = document.getElementById('subjectInputsContainer');
+        if (!container) return;
+
+        container.innerHTML = '';
+        SUBJECT_LIST.forEach(subject => {
+            container.innerHTML += `
+                <div class="subject-card">
+                    <label style="font-size: 13px;">${subject}</label>
+                    <input type="number" step="0.1" min="0" max="10" 
+                           class="score-input" 
+                           data-subject="${subject}" 
+                           placeholder="0.0 - 10.0">
+                </div>
+            `;
+        });
+    }
+
+   async function saveStudentData(e) {
+        if (e) e.preventDefault();
+        
+        const codeEl = document.getElementById("addStdCode");
+        const nameEl = document.getElementById("addStdName");
+        //const nicknameEl = document.getElementById("addStdNickname");
+        const monthEl = document.getElementById("addMonthSelect");
+
+        if (!codeEl || !nameEl || !monthEl) {
+            //return alert("หา id ใน HTML ไม่ครบ! เช็ก addStdCode, addStdName, addStdNickname, addMonthSelect");
+                    return alert("หา id ใน HTML ไม่ครบ! เช็ก addStdCode, addStdName, addMonthSelect");
+
+        }
+
+        const stdCode = codeEl.value.trim();
+        const stdName = nameEl.value.trim();
+       // const stdNickname = nicknameEl.value.trim();
+        const selectedMonth = monthEl.value;
+
+        if (!stdCode || !stdName) {
+            return alert("ກະລຸນາປ້ອນລະຫັດ ແລະ ຊື່ນັກຮຽນ!");
+        }
+
+        if (!selectedMonth) {
+            return alert("ກະລຸນາເລືອກເດືອນ!");
+        }
+
+        const scoreInputs = document.querySelectorAll(".score-input");
+        let monthScores = {};
+
+        scoreInputs.forEach((input) => {
+            const subject = input.getAttribute("data-subject");
+            const val = parseFloat(input.value);
+            if (!isNaN(val)) {
+                monthScores[subject] = val;
+            }
+        });
+
+         const payload = {
+           name: stdName,
+           // nickname: stdNickname,
+           scores: {
+               [`m_${selectedMonth}`]: monthScores,
+            },
+        };
+
+        // ทำการคลีน URL ป้องกันปัญหาสแลชซ้ำ
+        const cleanBaseUrl = FIREBASE_URL.replace(/\/+$/, "");
+        const targetUrl = `${cleanBaseUrl}/students/${encodeURIComponent(stdCode)}.json`;
+
+        try {
+            const res = await fetch(targetUrl, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+
+            if (res.ok) {
+                alert(`ບັນທຶກຂໍ້ມູນນັກຮຽນລະຫັດ ${stdCode} ສຳເລັດ!`); 
+                codeEl.value = "";
+                nameEl.value = "";
+               // nicknameEl.value = "";
+                scoreInputs.forEach((i) => (i.value = ""));
+            } else {
+                const errorData = await res.text();
+                console.error("Firebase Response Error:", res.status, errorData);
+                alert(`ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກ! (Status: ${res.status})`);
+            }
+        } catch (err) {
+            console.error("Save Error Details:", err);
+            alert("ບໍ່ສາມາດເຊື່ອມຕໍ່ Firebase ໄດ້! กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตหรือกฎ Firebase Rules");
+        }
+    }
+        </script>
+    </body>
+</html>

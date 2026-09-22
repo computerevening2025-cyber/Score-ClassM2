@@ -34,7 +34,7 @@ async function loginSystem(e) {
             title: 'ແຈ້ງເຕືອນ!',
             text: 'ກຍັງບໍ່ທັນຕັ້ງຄ່າ Admin ໃນ Firebase!',
             confirmButtonColor: '#1a73e8'
-            )};
+            });
            // return alert("ຍັງບໍ່ທັນຕັ້ງຄ່າ Admin ໃນ Firebase!");
         }
 

@@ -25,11 +25,16 @@ async function loginSystem(e) {
 
     try {
         const cleanBaseUrl = FIREBASE_URL.replace(/\/+$/, "");
-        const res = await fetch(`${cleanBaseUrl}/user/adminPMS.json`);
+        const res = await fetch(`${cleanBaseUrl}/user/admin.json`);
         const adminData = await res.json();
 
         if (!adminData) {
-            return alert("ຍັງບໍ່ທັນຕັ້ງຄ່າ Admin ໃນ Firebase!");
+            return Swal.fire({
+            icon: 'warning',
+            title: 'ແຈ້ງເຕືອນ!',
+            text: 'ກຍັງບໍ່ທັນຕັ້ງຄ່າ Admin ໃນ Firebase!',
+            confirmButtonColor: '#1a73e8'
+           // return alert("ຍັງບໍ່ທັນຕັ້ງຄ່າ Admin ໃນ Firebase!");
         }
 
         // ตรวจสอบทั้ง Username และ Password ให้ตรงกับ Firebase

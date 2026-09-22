@@ -56,7 +56,7 @@ async function searchStudentScores(e) {
             return Swal.fire({
                 icon: 'error',
                 title: 'ບໍ່ພົບຂໍ້ມູນ!',
-                text: ບໍ່ພົບຂໍ້ມູນນັກຮຽນລະຫັດ `${stdCode}!`,
+                text: 'ບໍ່ພົບຂໍ້ມູນນັກຮຽນລະຫັດ ${stdCode}!`,
                 confirmButtonColor: '#dc3545'
             });
         }
@@ -69,7 +69,7 @@ async function searchStudentScores(e) {
             return Swal.fire({
                 icon: 'warning',
                 title: 'ບໍ່ພົບຂໍ້ມູນ!',
-                text: ບໍ່ພົບຂໍ້ມູນຄະແນນໃນເດືອນ `${selectedMonth}!`,
+                text: 'ບໍ່ພົບຂໍ້ມູນຄະແນນໃນເດືອນ ${selectedMonth}!`,
                 confirmButtonColor: '#e6a23c'
             });
         }
@@ -131,137 +131,3 @@ async function searchStudentScores(e) {
     }
 }
 
-// async function searchStudentScores(e) {
-//     if (e) e.preventDefault();
-
-//     // 1. ดึง Element จาก HTML
-//     const monthEl = document.getElementById('monthSelect');
-//     const codeEl = document.getElementById('studentCodeInput');
-
-//     // if (!monthEl || !codeEl) return alert("ไม่พบช่องเลือกเดือนหรือช่องกรอกรหัสใน HTML!");
-
-//     const selectedMonth = monthEl.value;
-//     const stdCode = codeEl.value.trim();
-
-//     // if (!selectedMonth)
-//     //     if (resultCard) resultCard.style.display = "";
-//     //     return Swal.fire({
-//     //         icon: 'warning',
-//     //         title: 'ແຈ້ງເຕືອນ!',
-//     //         text: 'ກະລຸນາເລືອກເດືອນ ແລະ ປ້ອນລະຫັດນັກຮຽນ!',
-//     //         confirmButtonColor: '#feaf03'
-//     //     });
-
-//     if (!stdCode)
-//         if (resultCard) resultCard.style.display = "none";
-//         return Swal.fire({
-//             icon: 'warning',
-//             title: 'ແຈ້ງເຕືອນ!',
-//             text: 'ກະລຸນາປ້ອນລະຫັດນັກຮຽນ!',
-//             confirmButtonColor: '#feaf03'
-//         });
-
-//     try {
-//         const cleanBaseUrl = FIREBASE_URL.replace(/\/+$/, "");
-
-//         // 2. ดึงข้อมูลนักเรียนทุกคน เพื่อนำมาค้นหาและคำนวณอันดับ (Rank)
-//         const res = await fetch(`${cleanBaseUrl}/students.json`);
-//         if (!res.ok) throw new Error(`HTTP Error status: ${res.status}`);
-
-//         const allStudents = await res.json() || {};
-//         const studentData = allStudents[stdCode];
-
-//         // Element แสดงผล
-//         const scoreTableBody = document.getElementById('scoreTableBody');
-//         const studentInfo = document.getElementById('studentInfo');
-//         const resultCard = document.getElementById('resultCard');
-
-//         // Element การ์ดสรุปผล 3 ช่อง (ตรงกับ id ใน HTML)
-//         const totalScoreEl = document.getElementById('totalScoreVal');
-//         const avgScoreEl = document.getElementById('avgScoreVal');
-//         const rankEl = document.getElementById('rankVal');
-
-//         if (scoreTableBody) scoreTableBody.innerHTML = '';
-
-//         // เช็กว่าพบนักเรียนหรือไม่
-//         if (!studentData) {
-//             if (resultCard) resultCard.style.display = "none";
-//             return Swal.fire({
-//                 icon: 'warning',
-//                 title: 'ບໍ່ພົບຂໍ້ມູນ',
-//                 text: `ບໍ່ພົບຂໍ້ມູນນັກຮຽນລະຫັດ ${stdCode}!`,
-//                 confirmButtonColor: '#e6a23c',
-//                 confirmButtonText: 'ຕົກລົງ'
-//             });
-//         }
-
-//         // เช็กว่ามีคะแนนในเดือนนี้หรือไม่ (คีย์ m_X)
-//         const monthKey = `m_${selectedMonth}`;
-//         const monthScores = studentData.scores ? studentData.scores[monthKey] : null;
-
-//         if (!monthScores) {
-//             if (resultCard) resultCard.style.display = "none";
-//             return Swal.fire({
-//                 icon: 'warning',
-//                 title: 'ບໍ່ພົບຂໍ້ມູນ',
-//                 text: `ບໍ່ພົບຂໍ້ມູນຄະແນນໃນເດືອນ ${selectedMonth}!`,
-//                 confirmButtonColor: '#e6a23c',
-//                 confirmButtonText: 'ຕົກລົງ'
-//             });
-
-//         }
-
-//         // แสดงผลการ์ดและชื่อนักเรียน
-//         if (resultCard) resultCard.style.display = "block";
-//         if (studentInfo) {
-//             const nicknameText = studentData.nickname ? ` (${studentData.nickname})` : '';
-//             studentInfo.innerHTML = `<strong>ຊື່:</strong> ${studentData.name}${nicknameText} | <strong>ລະຫັດ:</strong> ${stdCode}`;
-//         }
-
-//         // 3. วนลูปตารางคะแนน + คำนวณผลรวม/เฉลี่ย
-//         let total = 0;
-//         let count = 0;
-
-//         for (const [subject, score] of Object.entries(monthScores)) {
-//             const numScore = parseFloat(score) || 0;
-//             total += numScore;
-//             count++;
-
-//             if (scoreTableBody) {
-//                 scoreTableBody.innerHTML += `
-//                     <tr>
-//                         <td>${subject}</td>
-//                         <td>${numScore}</td>
-//                     </tr>
-//                 `;
-//             }
-//         }
-
-//         const avg = count > 0 ? (total / count).toFixed(2) : "0.00";
-
-//         // 4. คำนวณอันดับ (Rank) เทียบกับเพื่อนทุกคนในเดือนเดียวกัน
-//         let studentList = [];
-//         for (const [id, std] of Object.entries(allStudents)) {
-//             if (std.scores && std.scores[monthKey]) {
-//                 let stdTotal = 0;
-//                 for (const s of Object.values(std.scores[monthKey])) {
-//                     stdTotal += parseFloat(s) || 0;
-//                 }
-//                 studentList.push({ id: id, total: stdTotal });
-//             }
-//         }
-
-//         studentList.sort((a, b) => b.total - a.total);
-//         const rankIndex = studentList.findIndex(item => item.id === stdCode);
-//         const rank = rankIndex !== -1 ? rankIndex + 1 : '-';
-
-//         // 5. ส่งค่าขึ้นหน้าจอ
-//         if (totalScoreEl) totalScoreEl.innerText = total.toFixed(1);
-//         if (avgScoreEl) avgScoreEl.innerText = avg;
-//         if (rankEl) rankEl.innerText = rank;
-
-//     } catch (err) {
-//         console.error("Search Error Details:", err);
-//         alert("ເກີດຂໍ້ຜິດພາດໃນການເຊື່ອມຕໍ່!");
-//     }
-// }

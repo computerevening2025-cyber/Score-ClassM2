@@ -36,8 +36,8 @@ async function searchStudentScores(e) {
 
     try {
         const cleanBaseUrl = FIREBASE_URL.replace(/\/+$/, "");
-        const res = await fetch(${cleanBaseUrl}/students.json);
-        if (!res.ok) throw new Error(HTTP Error status:${res.status});
+        const res = await fetch(`${cleanBaseUrl}/students.json`);
+        if (!res.ok) throw new Error(`HTTP Error status:${res.status}`);
 
         const allStudents = await res.json() || {};
         const studentData = allStudents[stdCode];
@@ -57,12 +57,12 @@ async function searchStudentScores(e) {
             return Swal.fire({
                 icon: 'error',
                 title: 'ບໍ່ພົບຂໍ້ມູນ!',
-                text: ບໍ່ພົບຂໍ້ມູນນັກຮຽນລະຫັດ ${stdCode}!,
+                text: `ບໍ່ພົບຂໍ້ມູນນັກຮຽນລະຫັດ ${stdCode}!`,
                 confirmButtonColor: '#dc3545'
             });
         }
 
-        const monthKey = m_${selectedMonth};
+        const monthKey = `m_${selectedMonth}`;
         const monthScores = studentData.scores ? studentData.scores[monthKey] : null;
 
         if (!monthScores) {
@@ -70,7 +70,7 @@ async function searchStudentScores(e) {
             return Swal.fire({
                 icon: 'warning',
                 title: 'ບໍ່ພົບຂໍ້ມູນ!',
-                text: ບໍ່ພົບຂໍ້ມູນຄະແນນໃນເດືອນ ${selectedMonth}!,
+                text: `ບໍ່ພົບຂໍ້ມູນຄະແນນໃນເດືອນ ${selectedMonth}!`,
                 confirmButtonColor: '#e6a23c'
             });
         }
@@ -78,7 +78,7 @@ async function searchStudentScores(e) {
         if (resultCard) resultCard.style.display = "block";
         if (studentInfo) {
             const nicknameText = studentData.nickname ? ` (${studentData.nickname})` : '';
-            studentInfo.innerHTML = <strong>ຊື່:</strong> ${studentData.name}${nicknameText} | <strong>ລະຫັດ:</strong> ${stdCode};
+            studentInfo.innerHTML = `<strong>ຊື່:</strong> ${studentData.name}${nicknameText} | <strong>ລະຫັດ:</strong> ${stdCode}`;
         }
 
         let total = 0;

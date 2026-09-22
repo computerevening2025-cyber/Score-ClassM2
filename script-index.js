@@ -1,4 +1,4 @@
-const FIREBASE_URL = "https://classscorem3-default-rtdb.firebaseio.com";
+const FIREBASE_URL = "https://point-classm2-default-rtdb.firebaseio.com/";
 async function searchStudentScores(e) {
     if (e) e.preventDefault();
 

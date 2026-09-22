@@ -25,7 +25,7 @@ async function loginSystem(e) {
 
     try {
         const cleanBaseUrl = FIREBASE_URL.replace(/\/+$/, "");
-        const res = await fetch(`${cleanBaseUrl}/user/admin.json`);
+        const res = await fetch(`${cleanBaseUrl}/user/Admin.json`);
         const adminData = await res.json();
 
         if (!adminData) {

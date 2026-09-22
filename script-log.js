@@ -35,7 +35,6 @@ async function loginSystem(e) {
             text: 'ກຍັງບໍ່ທັນຕັ້ງຄ່າ Admin ໃນ Firebase!',
             confirmButtonColor: '#1a73e8'
             });
-           // return alert("ຍັງບໍ່ທັນຕັ້ງຄ່າ Admin ໃນ Firebase!");
         }
 
         // ตรวจสอบทั้ง Username และ Password ให้ตรงกับ Firebase
